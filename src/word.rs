@@ -1,18 +1,63 @@
 use crate::utils::{colorize, Color};
-use random_word::gen;
-use random_word::Lang;
+use rand::prelude::IndexedRandom;
+use rand::seq::SliceRandom;
+use std::fmt;
 
 pub type Word = &'static str;
 pub type Words = Vec<Word>;
 
-pub fn generate_words(amount: u16) -> Words {
-    let mut words: Words = Vec::new();
-    // Loop for amount and add random generated words to Vec.
-    for _ in 0..amount {
-        let word: Word = gen(Lang::En);
-        words.push(word);
+pub enum Lang {
+    English,
+}
+
+impl fmt::Display for Lang {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s = match *self {
+            Lang::English => "en",
+        };
+        return write!(f, "{}", s);
     }
+}
+
+fn en_words() -> Words {
+    let words: Vec<&'static str> = vec![
+        "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for", "funny", "go",
+        "help", "here", "I", "in", "is", "it", "jump", "little", "look", "make", "me", "my", "not",
+        "one", "play", "red", "run", "said", "see", "the", "three", "to", "two", "up", "we",
+        "where", "yellow", "you", "all", "am", "are", "at", "ate", "be", "black", "brown", "but",
+        "came", "did", "do", "eat", "four", "get", "good", "have", "he", "into", "like", "must",
+        "new", "no", "now", "on", "our", "out", "please", "pretty", "ran", "ride", "saw", "say",
+        "she", "so", "soon", "that", "there", "they", "this", "too", "under", "want", "was",
+        "well", "went", "what", "white", "who", "will", "with", "yes", "after", "again", "an",
+        "any", "as", "ask", "by", "could", "every", "fly", "from", "give", "going", "had", "has",
+        "her", "him", "his", "how", "just", "know", "let", "live", "may", "of", "old", "once",
+        "open", "over", "put", "round", "some", "stop", "take", "thank", "them", "then", "think",
+        "walk", "were", "when", "always", "around", "because", "been", "before", "best", "both",
+        "buy", "call", "cold", "does", "don't", "fast", "first", "five", "found", "gave", "goes",
+        "green", "its", "left", "made", "many", "off", "or", "pull", "read", "right", "sing",
+        "sit", "sleep", "tell", "their", "these", "those", "upon", "us", "use", "very", "wash",
+        "which", "why", "wish", "work", "would", "write", "your", "about", "better", "bring",
+        "carry", "clean", "cut", "done", "draw", "drink", "eight", "fall", "far", "full", "got",
+        "grow", "hold", "hot", "hurt", "if", "keep", "kind", "laugh", "light", "long", "much",
+        "myself", "never", "only", "own", "pick", "seven", "shall", "show", "six", "small",
+        "start", "ten", "today", "together", "try", "warm",
+    ];
+
     return words;
+}
+
+pub fn generate_words(lang: Lang, amount: u16) -> Words {
+    let words: Words = match lang {
+        Lang::English => en_words(),
+    };
+
+    let mut rng = rand::rng();
+    let chosen_words: Words = words
+        .choose_multiple(&mut rng, amount as usize)
+        .cloned()
+        .collect();
+
+    return chosen_words;
 }
 
 pub fn stylize_word(word: Word, user_type: String) -> String {

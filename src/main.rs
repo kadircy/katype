@@ -8,7 +8,7 @@ use std::time::Duration;
 use std::time::Instant;
 
 #[derive(Debug, Parser)]
-#[clap(name = "kt", version = "0.1.0", author = "kadircy")]
+#[clap(name = "katype", author = "kadircy")]
 pub struct Cli {
     /// The amount of words given from `generate_words` for typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
@@ -19,23 +19,17 @@ fn main() {
     let args = Cli::parse();
     let stdin = stdin();
     let mut user_input = String::new();
-    let words: word::Words = word::generate_words(args.amount);
+    let words: word::Words = word::generate_words(word::Lang::English, args.amount);
     let (w_padding, h_padding) = utils::calculate_paddings(words.len());
     utils::clear_terminal();
-    print!(
-        "{}",
-        utils::colorize(
-            "ATTENTION: THE TIMER WILL START IN 5 SECONDS",
-            utils::Color::Red
-        )
-    );
+    print!("{}", utils::colorize("Be ready", utils::Color::Red));
     stdout().flush().unwrap();
-    std::thread::sleep(Duration::new(5, 0));
+    std::thread::sleep(Duration::new(3, 0));
     utils::clear_terminal();
     print!("{}", "\n".repeat(h_padding));
     print!("{}", " ".repeat(w_padding));
     for word in &words {
-        print!("{:4} ", *word);
+        print!("{} ", *word);
     }
     println!("");
     print!("{}", " ".repeat(w_padding));
@@ -65,11 +59,19 @@ fn main() {
     );
     println!(
         "total {} chars in {} words",
-        &words.join("").chars().collect::<Vec<char>>().len(),
-        &words.len()
+        utils::colorize(
+            &words
+                .join("")
+                .chars()
+                .collect::<Vec<char>>()
+                .len()
+                .to_string(),
+            utils::Color::Green
+        ),
+        utils::colorize(&words.len().to_string(), utils::Color::Green)
     );
     println!(
-        "consistency: first error on ch {}",
+        "consistency: {}%",
         utils::colorize(&consistency.to_string(), utils::Color::Green)
     );
     println!(

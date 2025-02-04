@@ -1,8 +1,11 @@
 [package]
-name = "kt"
+name = "katype"
 version = "0.1.0"
+description = "A fast typing test from terminal writted in Rust 🦀"
+repository = "https://github.com/kadircy/katype"
+license = "MIT"
 edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.27", features = ["derive"] }
-random_word = { version = "0.4.3", features = ["en"] }
+rand = "0.9.0"

@@ -1,5 +1,6 @@
 use std::cmp::max;
 use std::env;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub enum Color {
     Gray,
@@ -29,7 +30,11 @@ pub fn calculate_paddings(text_len: usize) -> (usize, usize) {
         .ok()
         .and_then(|s| s.parse::<usize>().ok())
         .unwrap_or(24);
-    let width_padding = max((terminal_width - text_len) / 8, 7);
+    let width_padding = if text_len > terminal_width {
+        3
+    } else {
+        max((terminal_width - text_len) / 2, 2)
+    };
     let height_padding = max((terminal_height - 3) / 2, 7);
 
     return (width_padding, height_padding);
