@@ -1,6 +1,6 @@
 # katype
 
-<p aling="center">
+<p align="center">
     <img height="200px" alt="Katype Logo" src="./assets/logo.png" />
     <br>
     <strong>A fast typing test from terminal writted in Rust 🦀</strong>
