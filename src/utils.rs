@@ -1,6 +1,5 @@
 use std::cmp::max;
 use std::env;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 pub enum Color {
     Gray,

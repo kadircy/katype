@@ -1,6 +1,5 @@
 use crate::utils::{colorize, Color};
 use rand::prelude::IndexedRandom;
-use rand::seq::SliceRandom;
 use std::fmt;
 
 pub type Word = &'static str;
@@ -19,6 +18,9 @@ impl fmt::Display for Lang {
     }
 }
 
+/// Returns most used 120 keywords on English language.
+/// This is a private function because functions don't use it expect `generate_words`.
+/// NOTE: All other functions similar to this should be named in this format: `{lang}_words`.
 fn en_words() -> Words {
     let words: Vec<&'static str> = vec![
         "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for", "funny", "go",
@@ -46,12 +48,13 @@ fn en_words() -> Words {
     return words;
 }
 
+/// Generate random words with given amount on given Language.
 pub fn generate_words(lang: Lang, amount: u16) -> Words {
     let words: Words = match lang {
         Lang::English => en_words(),
     };
 
-    let mut rng = rand::rng();
+    let mut rng = rand::rng(); // Randomize selected words.
     let chosen_words: Words = words
         .choose_multiple(&mut rng, amount as usize)
         .cloned()
@@ -67,19 +70,19 @@ pub fn stylize_word(word: Word, user_type: String) -> String {
     // Loop for characters and index in `word_chars`.
     for (index, ch) in word_chars.iter().enumerate() {
         let user_ch = user_type_chars.get(index);
-        // If there is no typed char from user.
+        // If there is no typed char from user stylize it with Gray.
         if user_ch.is_none() {
             styled_word.push_str(&colorize(&ch.to_string(), Color::Gray));
             continue;
         }
 
-        // If the user typed char and word is same.
+        // If the user typed char and word char is same stylize it with Green.
         if user_ch.unwrap() == ch {
             styled_word.push_str(&colorize(&ch.to_string(), Color::Green));
             continue;
         }
 
-        // If the user typed char and word is different.
+        // If the user typed char and word char is different stylize it with Red.
         if user_ch.unwrap() != ch {
             styled_word.push_str(&colorize(&ch.to_string(), Color::Red));
         }
