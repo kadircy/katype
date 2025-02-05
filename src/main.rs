@@ -8,7 +8,7 @@ use std::time::Duration;
 use std::time::Instant;
 
 #[derive(Debug, Parser)]
-#[clap(name = "katype", author = "kadircy")]
+#[clap(name = "katype", author = "kadircy", version = "0.1.1")]
 pub struct Cli {
     /// The amount of words given from `generate_words` for typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
