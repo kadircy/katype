@@ -53,7 +53,7 @@ fn main() {
         utils::colorize(&wpm.to_string(), utils::Color::Green)
     );
     println!(
-        "acc: {}",
+        "acc: {}%",
         utils::colorize(&acc.to_string(), utils::Color::Green)
     );
     println!(
