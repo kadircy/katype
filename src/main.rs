@@ -22,8 +22,7 @@ fn main() {
     let words: word::Words = word::generate_words(word::Lang::English, args.amount);
     let (w_padding, h_padding) = utils::calculate_paddings(words.len());
     utils::clear_terminal();
-    print!("{}", utils::colorize("Be ready", utils::Color::Red));
-    stdout().flush().unwrap();
+    println!("{}", utils::colorize("Be ready", utils::Color::Red));
     std::thread::sleep(Duration::new(3, 0));
     utils::clear_terminal();
     print!("{}", "\n".repeat(h_padding));
