@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Added option to CLI for changing language to different one from English.
 
 ## [0.1.1] - 2025-02-05
 

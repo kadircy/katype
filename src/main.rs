@@ -1,7 +1,6 @@
 pub mod result;
 pub mod utils;
 pub mod word;
-
 use clap::Parser;
 use std::io::{stdin, stdout, Write};
 use std::time::Duration;
@@ -13,14 +12,25 @@ pub struct Cli {
     /// The amount of words given from `generate_words` for typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
     amount: u16,
+    /// The language of words for typing test. Avaliable langs are: EN, ES
+    #[clap(long, short = 'l', default_value_t = String::from("en"))]
+    lang: String,
 }
 
 fn main() {
     let args = Cli::parse();
     let stdin = stdin();
     let mut user_input = String::new();
-    // TODO: Add support for '--lang, -l' argument.
-    let words: word::Words = word::generate_words(word::Lang::English, args.amount);
+    let lang: word::Lang = match &args.lang as &str {
+        "en" => word::Lang::English,
+        "es" => word::Lang::Spanish,
+        _ => {
+            utils::clear_terminal();
+            println!("Unimplemented langauge. Exiting with code 1.");
+            std::process::exit(1);
+        }
+    };
+    let words: word::Words = word::generate_words(&lang, args.amount);
     // Centerize words and user input in terminal.
     let (w_padding, h_padding) = utils::calculate_paddings(words.len());
     utils::clear_terminal();
@@ -87,6 +97,6 @@ fn main() {
     println!(
         "type: {}s {}",
         utils::colorize(&elapsed.as_secs().to_string(), utils::Color::Green),
-        utils::colorize("english", utils::Color::Green),
+        utils::colorize(&lang.to_string(), utils::Color::Green),
     );
 }

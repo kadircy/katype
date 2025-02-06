@@ -7,12 +7,14 @@ pub type Words = Vec<Word>;
 
 pub enum Lang {
     English,
+    Spanish,
 }
 
 impl fmt::Display for Lang {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let s = match *self {
             Lang::English => "en",
+            Lang::Spanish => "es",
         };
         return write!(f, "{}", s);
     }
@@ -22,7 +24,7 @@ impl fmt::Display for Lang {
 /// This is a private function because functions don't use it expect `generate_words`.
 /// NOTE: All other functions similar to this should be named in this format: `{lang}_words`.
 fn en_words() -> Words {
-    let words: Vec<&'static str> = vec![
+    let words: Words = vec![
         "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for", "funny", "go",
         "help", "here", "I", "in", "is", "it", "jump", "little", "look", "make", "me", "my", "not",
         "one", "play", "red", "run", "said", "see", "the", "three", "to", "two", "up", "we",
@@ -48,10 +50,120 @@ fn en_words() -> Words {
     return words;
 }
 
+/// Returns most used 100 keywords on Spanish language.
+fn es_words() -> Words {
+    let words: Words = vec![
+        "el",
+        "la",
+        "de",
+        "que",
+        "y",
+        "a",
+        "en",
+        "un",
+        "ser",
+        "se",
+        "no",
+        "haber",
+        "por",
+        "con",
+        "su",
+        "para",
+        "como",
+        "estar",
+        "tener",
+        "le",
+        "lo",
+        "lo",
+        "todo",
+        "pero",
+        "más",
+        "hacer",
+        "o",
+        "poder",
+        "decir",
+        "este",
+        "ir",
+        "otro",
+        "ese",
+        "la",
+        "si",
+        "me",
+        "ya",
+        "ver",
+        "porque",
+        "dar",
+        "cuando",
+        "él",
+        "muy",
+        "sin",
+        "vez",
+        "mucho",
+        "saber",
+        "qué",
+        "sobre",
+        "mi",
+        "alguno",
+        "mismo",
+        "yo",
+        "también",
+        "hasta",
+        "año",
+        "dos",
+        "querer",
+        "entre",
+        "así",
+        "primero",
+        "desde",
+        "grande",
+        "eso",
+        "ni",
+        "nos",
+        "llegar",
+        "pasar",
+        "tiempo",
+        "ella",
+        "sí",
+        "día",
+        "uno",
+        "bien",
+        "poco",
+        "deber",
+        "entonces",
+        "poner",
+        "cosa",
+        "tanto",
+        "hombre",
+        "parecer",
+        "nuestro",
+        "tan",
+        "donde",
+        "ahora",
+        "parte",
+        "después",
+        "vida",
+        "quedar",
+        "siempre",
+        "creer",
+        "hablar",
+        "llevar",
+        "dejar",
+        "nada",
+        "cada",
+        "seguir",
+        "menos",
+        "nuevo",
+        "encontrar",
+    ];
+
+    return words;
+}
+
 /// Generate random words with given amount on given Language.
-pub fn generate_words(lang: Lang, amount: u16) -> Words {
+pub fn generate_words(lang: &Lang, amount: u16) -> Words {
     let words: Words = match lang {
         Lang::English => en_words(),
+        Lang::Spanish => es_words(),
     };
 
     let mut rng = rand::rng(); // Randomize selected words.
