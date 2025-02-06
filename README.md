@@ -50,6 +50,10 @@ When running `katype`, the following arguments are:
   * Sets the amount of words to type. Default is `15`.
   * `--amount 22` will set the amount of words to `22`.
   * `-a 5` will set the amount of words to `5`.
+- `--language, -l`
+  * Sets the language of words to type. Default is `en`.
+  * `--language es` will set the language to `Spanish`.
+  * `-l en` will set the language to `English`.
 
 ## Contributing
 
