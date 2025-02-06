@@ -1,3 +1,4 @@
+pub mod code;
 pub mod result;
 pub mod utils;
 pub mod word;
@@ -15,6 +16,10 @@ pub struct Cli {
     /// The language of words for typing test. Avaliable langs are: EN, ES
     #[clap(long, short = 'l', default_value_t = String::from("en"))]
     lang: String,
+    /// Use a code instead of random numbers. The code will be override all options and use
+    /// the ones that include in the code.
+    #[clap(long, short = 'c')]
+    code: Option<String>,
 }
 
 fn main() {
@@ -30,7 +35,11 @@ fn main() {
             std::process::exit(1);
         }
     };
-    let words: word::Words = word::generate_words(&lang, args.amount);
+    let words: word::Words = if args.code.is_none() == false {
+        code::resolve_code(&args.code.unwrap())
+    } else {
+        word::generate_words(&lang, args.amount)
+    };
     // Centerize words and user input in terminal.
     let (w_padding, h_padding) = utils::calculate_paddings(words.len());
     utils::clear_terminal();
@@ -67,6 +76,7 @@ fn main() {
     // Get results for typing test.
     let (wpm, acc, consistency): result::Results =
         result::calculate_result(&words, &user_words, elapsed.as_secs().try_into().unwrap());
+    let base64_code: String = code::generate_code(&words);
     // Print results to the terminal for user to see.
     println!("{}", word_statistic);
     println!(
@@ -98,5 +108,9 @@ fn main() {
         "type: {}s {}",
         utils::colorize(&elapsed.as_secs().to_string(), utils::Color::Green),
         utils::colorize(&lang.to_string(), utils::Color::Green),
+    );
+    println!(
+        "code: {}",
+        utils::colorize(&base64_code, utils::Color::Green)
     );
 }
