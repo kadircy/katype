@@ -1,10 +1,14 @@
 use crate::utils::{colorize, Color};
 use rand::prelude::IndexedRandom;
+use rand::seq::IteratorRandom; // More appropriate random trait
 use std::fmt;
 
+/// Type alias for representing a word as a reference to a static string.
 pub type Word = &'static str;
+/// Type alias for representing a collection of words.
 pub type Words = Vec<Word>;
 
+/// Enum to represent supported languages.
 pub enum Lang {
     English,
     Spanish,
@@ -16,15 +20,14 @@ impl fmt::Display for Lang {
             Lang::English => "en",
             Lang::Spanish => "es",
         };
-        return write!(f, "{}", s);
+        write!(f, "{}", s)
     }
 }
 
-/// Returns most used 120 keywords on English language.
-/// This is a private function because functions don't use it expect `generate_words`.
-/// NOTE: All other functions similar to this should be named in this format: `{lang}_words`.
+/// Returns the most used 120 English keywords.
+/// This is a private function used internally by `generate_words`.
 fn en_words() -> Words {
-    let words: Words = vec![
+    vec![
         "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for", "funny", "go",
         "help", "here", "I", "in", "is", "it", "jump", "little", "look", "make", "me", "my", "not",
         "one", "play", "red", "run", "said", "see", "the", "three", "to", "two", "up", "we",
@@ -45,14 +48,12 @@ fn en_words() -> Words {
         "grow", "hold", "hot", "hurt", "if", "keep", "kind", "laugh", "light", "long", "much",
         "myself", "never", "only", "own", "pick", "seven", "shall", "show", "six", "small",
         "start", "ten", "today", "together", "try", "warm",
-    ];
-
-    return words;
+    ]
 }
 
-/// Returns most used 100 keywords on Spanish language.
+/// Returns the most used 100 Spanish keywords.
 fn es_words() -> Words {
-    let words: Words = vec![
+    vec![
         "el",
         "la",
         "de",
@@ -154,50 +155,38 @@ fn es_words() -> Words {
         "menos",
         "nuevo",
         "encontrar",
-    ];
-
-    return words;
+    ]
 }
 
-/// Generate random words with given amount on given Language.
+/// Generate random words based on the selected language and amount.
 pub fn generate_words(lang: &Lang, amount: u16) -> Words {
-    let words: Words = match lang {
+    let words = match lang {
         Lang::English => en_words(),
         Lang::Spanish => es_words(),
     };
 
-    let mut rng = rand::rng(); // Randomize selected words.
-    let chosen_words: Words = words
+    let mut rng = rand::thread_rng(); // Use a thread-local RNG.
+    words
         .choose_multiple(&mut rng, amount as usize)
         .cloned()
-        .collect();
-
-    return chosen_words;
+        .collect()
 }
 
+/// Stylize a word by comparing it to the user-typed string.
 pub fn stylize_word(word: Word, user_type: String) -> String {
-    let mut styled_word: String = String::new(); // Create a new string for styled text.
     let word_chars: Vec<char> = word.chars().collect();
     let user_type_chars: Vec<char> = user_type.chars().collect();
-    // Loop for characters and index in `word_chars`.
-    for (index, ch) in word_chars.iter().enumerate() {
-        let user_ch = user_type_chars.get(index);
-        // If there is no typed char from user stylize it with Gray.
-        if user_ch.is_none() {
-            styled_word.push_str(&colorize(&ch.to_string(), Color::Gray));
-            continue;
-        }
 
-        // If the user typed char and word char is same stylize it with Green.
-        if user_ch.unwrap() == ch {
-            styled_word.push_str(&colorize(&ch.to_string(), Color::Green));
-            continue;
-        }
-
-        // If the user typed char and word char is different stylize it with Red.
-        if user_ch.unwrap() != ch {
-            styled_word.push_str(&colorize(&ch.to_string(), Color::Red));
-        }
-    }
-    return styled_word;
+    word_chars
+        .iter()
+        .enumerate()
+        .map(|(index, &ch)| {
+            let user_ch = user_type_chars.get(index);
+            match user_ch {
+                Some(&uc) if uc == ch => colorize(&ch.to_string(), Color::Green),
+                Some(_) => colorize(&ch.to_string(), Color::Red),
+                None => colorize(&ch.to_string(), Color::Gray),
+            }
+        })
+        .collect::<String>()
 }
