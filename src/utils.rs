@@ -36,5 +36,5 @@ pub fn calculate_paddings(text_len: usize) -> (usize, usize) {
     };
     let height_padding = max((terminal_height - 3) / 2, 7);
 
-    return (width_padding, height_padding);
+    (width_padding, height_padding)
 }

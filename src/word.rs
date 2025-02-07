@@ -1,6 +1,5 @@
 use crate::utils::{colorize, Color};
 use rand::prelude::IndexedRandom;
-use rand::seq::IteratorRandom; // More appropriate random trait
 use std::fmt;
 
 /// Type alias for representing a word as a reference to a static string.
@@ -165,7 +164,7 @@ pub fn generate_words(lang: &Lang, amount: u16) -> Words {
         Lang::Spanish => es_words(),
     };
 
-    let mut rng = rand::thread_rng(); // Use a thread-local RNG.
+    let mut rng = rand::rng(); // Use a thread-local RNG.
     words
         .choose_multiple(&mut rng, amount as usize)
         .cloned()

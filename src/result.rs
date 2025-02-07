@@ -34,9 +34,9 @@ pub fn calculate_result(words: &Vec<&str>, user_words: &Vec<&str>, duration: u16
         (consistency as f32 / words.len() as f32) * 100.0
     };
 
-    return (
+    (
         wpm.round(),
         accuracy.round(),
         consistency_percentage.round(),
-    );
+    )
 }

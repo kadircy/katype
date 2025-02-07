@@ -4,8 +4,7 @@ use serde_json;
 
 pub fn generate_code(words: &Words) -> String {
     let encoded_json = serde_json::to_string(words).expect("Invalid format of JSON in Words.");
-    let base64 = URL_SAFE.encode(encoded_json);
-    return base64;
+    URL_SAFE.encode(encoded_json)
 }
 
 pub fn resolve_code(code: &str) -> Words {
@@ -23,7 +22,7 @@ pub fn resolve_code(code: &str) -> Words {
 
     // Deserialize the decoded string into the `Words` type by borrowing `static_str`
     let decoded_words: Words =
-        serde_json::from_str(&static_str).expect("Unable to decode words from string.");
+        serde_json::from_str(static_str).expect("Unable to decode words from string.");
 
-    return decoded_words;
+    decoded_words
 }

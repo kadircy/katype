@@ -5,6 +5,8 @@
 - Added option to CLI for changing language to different one from English.
 - Implemented base64 codes for tests. Now you can share your tests with codes.
 - Added comment lines for more readable code.
+- Added an description to CLI.
+- `cargo clippy` standarts implemented for better code.
 
 ### Changed
 - The whole workspace refactored to be more performant.
