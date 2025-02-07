@@ -10,7 +10,12 @@ use std::time::{Duration, Instant};
 
 // Define the command-line arguments structure.
 #[derive(Debug, Parser)]
-#[clap(name = "katype", author = "kadircy", version = "0.1.1")]
+#[clap(
+    name = "katype",
+    about = "A fast typing test from terminal writted in Rust 🦀",
+    author = "kadircy",
+    version = "0.1.1"
+)]
 pub struct Cli {
     /// The number of words generated for the typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
