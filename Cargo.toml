@@ -1,6 +1,6 @@
 [package]
 name = "katype"
-version = "0.1.1"
+version = "0.2.1"
 description = "A fast typing test from terminal writted in Rust 🦀"
 repository = "https://github.com/kadircy/katype"
 license = "MIT"

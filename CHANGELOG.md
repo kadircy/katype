@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.1] - 2025-02-07
 ### Added
 - Added option to CLI for changing language to different one from English.
 - Implemented base64 codes for tests. Now you can share your tests with codes.
@@ -12,7 +14,6 @@
 - The whole workspace refactored to be more performant.
 
 ## [0.1.1] - 2025-02-05
-
 ### Added
 - Writed comments to the code workspace for better understanding and DX.
 - Version information for CLI.

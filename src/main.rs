@@ -14,7 +14,7 @@ use std::time::{Duration, Instant};
     name = "katype",
     about = "A fast typing test from terminal writted in Rust 🦀",
     author = "kadircy",
-    version = "0.1.1"
+    version = "0.2.1"
 )]
 pub struct Cli {
     /// The number of words generated for the typing test. Max value is 65535.
