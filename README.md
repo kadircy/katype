@@ -37,7 +37,13 @@ katype -a 123     # Use 123 random words for test without delay.
 1. **Install Binary**:
 `katype` runs on many major platforms. If you are having issues with `katype` on your platform, please [open an issue](https://github.com/kadircy/katype/issues/new)
 
-The recommended way to install is from install script:
+The recommended way to install is from `cargo`:
+
+```bash
+cargo install katype
+```
+
+Or **katype** can be install via `curl`:
 
 ```bash
 curl -sSfL https://raw.githubusercontent.com/kadircy/katype/master/install.sh | sh
