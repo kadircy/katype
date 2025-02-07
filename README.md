@@ -10,7 +10,7 @@
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/kadircy/katype">
 </p>
 
-[![asciicast](https://asciinema.org/a/07kA9HQ9ERXSC5Qy8G4SYKlP7.svg)](https://asciinema.org/a/07kA9HQ9ERXSC5Qy8G4SYKlP7)
+[![asciicast](https://asciinema.org/a/6RccCcS2xqrZ39DFaMxWQFYF7.svg)](https://asciinema.org/a/6RccCcS2xqrZ39DFaMxWQFYF7)
 
 ## Features
 
