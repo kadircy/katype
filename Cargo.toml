@@ -3,7 +3,12 @@ name = "katype"
 version = "0.2.1"
 description = "A fast typing test from terminal writted in Rust 🦀"
 repository = "https://github.com/kadircy/katype"
+homepage = "https://github.com/kadircy/katype"
+readme = "README.md"
 license = "MIT"
+keywords = ["typing", "test", "tui", "cli", "monkeytype"]
+categories = ["command-line-interface"]
+exclude = ["assets", "./install.sh"]
 edition = "2021"
 
 [dependencies]
