@@ -60,6 +60,10 @@ When running `katype`, the following arguments are:
   * Sets the language of words to type. Default is `en`.
   * `--language es` will set the language to `Spanish`.
   * `-l en` will set the language to `English`.
+- `--code, -c`
+  * Set all the options and words with a Base64 code.
+  * `--code ABCDEFG...` will override all the options and words with words in the code.
+  * `-c ABCDEFG...` will do the same.
 
 ## Contributing
 
