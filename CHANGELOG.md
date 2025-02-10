@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- The way of calculating consistency is changed for better overview. Now it continues even if an error occures.
 
 ## [0.2.1] - 2025-02-07
 ### Added

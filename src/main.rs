@@ -112,7 +112,7 @@ fn main() {
     );
     println!(
         "consistency: {}%",
-        utils::colorize(&consistency.to_string(), utils::Color::Green)
+        utils::colorize(&consistency.to_string(), utils::Color::Green),
     );
     println!(
         "time: {}s {}",

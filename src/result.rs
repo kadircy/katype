@@ -24,8 +24,6 @@ pub fn calculate_result(words: &Vec<&str>, user_words: &Vec<&str>, duration: u16
     for (w1, w2) in words.iter().zip(user_words.iter()) {
         if w1 == w2 {
             consistency += 1;
-        } else {
-            break; // Stop counting once we encounter the first incorrect word
         }
     }
     let consistency_percentage = if words.is_empty() {
