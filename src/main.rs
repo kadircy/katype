@@ -8,6 +8,8 @@ use clap::Parser;
 use std::io::{stdin, stdout, Write};
 use std::time::{Duration, Instant};
 
+const DEFAULT_READY_TEXT: &str = "Be ready";
+
 // Define the command-line arguments structure.
 #[derive(Debug, Parser)]
 #[clap(
@@ -28,6 +30,10 @@ pub struct Cli {
     /// Use a code instead of random words. Overrides other options and uses parameters from the code.
     #[clap(long, short = 'c')]
     code: Option<String>,
+
+    /// The warning message before text starts.
+    #[clap(long, short = 'r')]
+    ready_text: Option<String>,
 }
 
 fn main() {
@@ -51,12 +57,18 @@ fn main() {
         word::generate_words(&lang, args.amount)
     };
 
+    let ready_text = args.ready_text.unwrap_or(String::from(DEFAULT_READY_TEXT));
+
+    let (_, h_padding_ready_text) = utils::calculate_paddings(ready_text.len());
+
     // Centerize the words and user input in terminal
     let (w_padding, h_padding) = utils::calculate_paddings(words.len());
     utils::clear_terminal();
 
     // Show a warning message before the timer starts
-    println!("{}", utils::colorize("Be ready", utils::Color::Red));
+    print!("{}", "\n".repeat(h_padding_ready_text)); // Padding for height
+    print!("{:width$}", "", width = w_padding); // Padding for ready text
+    println!("{}", utils::colorize(&ready_text, utils::Color::Red));
     std::thread::sleep(Duration::new(3, 0));
     utils::clear_terminal();
 
