@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+###
+- Added support for changing "Be Ready" (ready text) to custom one.
 ### Changed
 - The way of calculating consistency is changed for better overview. Now it continues even if an error occures.
 
