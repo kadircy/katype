@@ -6,6 +6,7 @@ pub mod word;
 
 use clap::Parser;
 use std::io::{stdin, stdout, Write};
+use std::thread;
 use std::time::{Duration, Instant};
 
 const DEFAULT_READY_TEXT: &str = "Be ready";
@@ -34,6 +35,10 @@ pub struct Cli {
     /// The warning message before text starts.
     #[clap(long, short = 'r')]
     ready_text: Option<String>,
+
+    /// Set a timeout for test. The test will be ended automatically when reached the timeout.
+    #[clap(long, short = 't')]
+    timeout: Option<u64>,
 }
 
 fn main() {
@@ -85,6 +90,19 @@ fn main() {
 
     // Start the timer
     let timer = Instant::now();
+    // Start the timeout thread if timout argument given
+    if args.timeout.is_some() {
+        thread::spawn(move || loop {
+            if timer.elapsed().as_secs() >= Duration::new(args.timeout.unwrap(), 0).as_secs() {
+                println!(
+                    "{}",
+                    utils::colorize("The timeout ended.", utils::Color::Red)
+                );
+                std::process::exit(0);
+            }
+        });
+    }
+
     let mut user_input = String::new();
     stdin().read_line(&mut user_input).unwrap(); // Read user input
 

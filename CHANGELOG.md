@@ -1,8 +1,10 @@
 # Changelog
 
 ## [Unreleased]
-###
+### Added
 - Added support for changing "Be Ready" (ready text) to custom one.
+- Added support for setting a timeout duration to test.
+
 ### Changed
 - The way of calculating consistency is changed for better overview. Now it continues even if an error occures.
 
