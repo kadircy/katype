@@ -2,6 +2,12 @@ use crate::word::Words;
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 use serde_json;
 
+pub fn generate_code_from_str(words: &str) -> String {
+    let words: Vec<&str> = words.split(',').collect();
+    let encoded_json = serde_json::to_string(&words).expect("Invalid format of JSON in Words");
+    URL_SAFE.encode(encoded_json)
+}
+
 pub fn generate_code(words: &Words) -> String {
     let encoded_json = serde_json::to_string(words).expect("Invalid format of JSON in Words.");
     URL_SAFE.encode(encoded_json)
