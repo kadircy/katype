@@ -4,6 +4,8 @@
 ### Added
 - Added support for changing "Be Ready" (ready text) to custom one.
 - Added support for setting a timeout duration to test.
+- Added option to CLI for generating code with custom words.
+- Added an function to generate code from `&str` (words split by comma).
 
 ### Changed
 - The way of calculating consistency is changed for better overview. Now it continues even if an error occures.
