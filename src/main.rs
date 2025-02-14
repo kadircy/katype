@@ -39,6 +39,10 @@ pub struct Cli {
     /// Set a timeout for test. The test will be ended automatically when reached the timeout.
     #[clap(long, short = 't')]
     timeout: Option<u64>,
+
+    /// Generate your code for custom typing test. Words are seperated by comma (,).
+    #[clap(long, short = 'g')]
+    generate: Option<String>,
 }
 
 fn main() {
@@ -54,6 +58,22 @@ fn main() {
             std::process::exit(1);
         }
     };
+
+    // Check if there is some generate argument
+    if args.generate.is_some() {
+        // Generate Base64 code for words
+        let code = code::generate_code_from_str(&args.generate.unwrap());
+        println!(
+            "There is your code: {}",
+            utils::colorize(&code, utils::Color::Green)
+        );
+        println!(
+            "You can run test with this code via: {}",
+            utils::colorize(&format!("katype --code {}", &code), utils::Color::Green)
+        );
+        // Exit after code generated before terminal cleaned
+        std::process::exit(0);
+    }
 
     // Resolve words either from code or by generating random words
     let words = if let Some(code) = &args.code {
