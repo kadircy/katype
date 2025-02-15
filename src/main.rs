@@ -47,7 +47,8 @@ struct Cli {
     #[clap(long, short = 't')]
     timeout: Option<u64>,
 
-    /// Generate your code for custom typing test. Words are seperated by comma (,).
+    /// Generate your code for custom typing test. Words are seperated by comma whitespace and
+    /// should be in quotes (like this: "hello world").
     #[clap(long, short = 'g')]
     generate: Option<String>,
 
