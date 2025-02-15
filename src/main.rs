@@ -11,6 +11,13 @@ use std::time::{Duration, Instant};
 
 const DEFAULT_READY_TEXT: &str = "Be ready";
 
+#[derive(serde::Serialize)]
+struct ResultJson {
+    wpm: f32,
+    acc: f32,
+    consistency: f32,
+}
+
 // Define the command-line arguments structure.
 #[derive(Debug, Parser)]
 #[clap(
@@ -19,7 +26,7 @@ const DEFAULT_READY_TEXT: &str = "Be ready";
     author = "kadircy",
     version = "0.2.1"
 )]
-pub struct Cli {
+struct Cli {
     /// The number of words generated for the typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
     amount: u16,
@@ -43,6 +50,10 @@ pub struct Cli {
     /// Generate your code for custom typing test. Words are seperated by comma (,).
     #[clap(long, short = 'g')]
     generate: Option<String>,
+
+    /// Print test results in JSON format. Useful when embedding results to your program.
+    #[clap(long, short = 'j', default_value_t = false)]
+    json: bool,
 }
 
 fn main() {
@@ -131,16 +142,29 @@ fn main() {
 
     utils::clear_terminal();
 
+    // Calculate the results for the typing test
+    let (wpm, acc, consistency) =
+        result::calculate_result(&words, &user_words, elapsed.as_secs() as u16);
+
+    if args.json {
+        // Don't need to calculate word_statistics
+        // Because we will not use it (for now)
+        let json = serde_json::to_string(&ResultJson {
+            wpm,
+            acc,
+            consistency,
+        });
+        println!("{}", json.expect("Unable to convert result to json"));
+        // Exit from program because we don't want to print more information to stdout
+        std::process::exit(0);
+    }
+
     // Build the word statistics string for colored output
     let word_statistic: String = words
         .iter()
         .zip(user_words.iter()) // Zip together words and user input for comparison
         .map(|(word, user_word)| word::stylize_word(word, user_word.to_string()) + " ")
         .collect();
-
-    // Calculate the results for the typing test
-    let (wpm, acc, consistency) =
-        result::calculate_result(&words, &user_words, elapsed.as_secs() as u16);
 
     // Generate base64 code for the words
     let base64_code = code::generate_code(&words);
