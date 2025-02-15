@@ -15,7 +15,7 @@
 ## Features
 
 - **Fast**: `katype` can start blazingly fast and run it without any lags or delay.
-- **Lightweight**: There are a lot of features and `katype` only uses around **2.5 Mb** of RAM (in debug build).
+- **Lightweight**: There are a lot of features and `katype` only uses around **3 Mb** of RAM.
 - **Single-file**: Don't need for additional files or packages to run. Just download it and test your fingers.
 - **Customizable**: Bring your own settings, stylings and experience different universes.
 - **Statistics**: See your own results and share with your friends in fancy way.
@@ -24,11 +24,13 @@
 ## Getting Started
 
 ```bash
-katype            # test your limits in typing
-katype -h         # see all avaliable options on cli
-katype -v         # see version of the program. Update katype if it is old.
-katype -a 5       # Use 5 random words for test.
-katype -a 123     # Use 123 random words for test without delay.
+katype                      # test your limits in typing
+katype -h                   # see all avaliable options on cli
+katype -v                   # see version of the program. Update katype if it is old.
+katype -a 5                 # Use 5 random words for test.
+katype -a 123               # Use 123 random words for test without delay.
+katype -g "hello world"     # Create your own test with words: hello world
+katype -t 15                # Set a 15 seconds timeout for test
 ```
 
 ## Installation
@@ -64,6 +66,18 @@ When running `katype`, the following arguments are:
   * Set all the options and words with a Base64 code.
   * `--code ABCDEFG...` will override all the options and words with words in the code.
   * `-c ABCDEFG...` will do the same.
+- `--ready-text, -r`
+  * `--ready-text` will set the "Be ready" text to custom one.
+  * `-r` will set the "Be ready" text to custom one.
+- `--timeout, -t`
+  * `--timeout 15` will set a timeout of 15 seconds.
+  * `-t 3` will set a timeout of 3 seconds.
+- `--generate, -g`
+  * `--generate "example dot com"` will generate custom code for words: example dot com.
+  * `-g "i hate rust"` will do the same.
+- `--json, -j`
+  * `--json` will print the results in JSON format.
+  * `-j` will do the same.
 
 ## Contributing
 
