@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.2] - 2025-02-15
 ### Added
 - Added support for changing "Be Ready" (ready text) to custom one.
 - Added support for setting a timeout duration to test.
