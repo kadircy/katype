@@ -164,7 +164,7 @@ pub fn generate_words(lang: &Lang, amount: u16) -> Words {
         Lang::Spanish => es_words(),
     };
 
-    let mut rng = rand::rng(); // Use a thread-local RNG.
+    let mut rng = rand::rng();
     words
         .choose_multiple(&mut rng, amount as usize)
         .cloned()
@@ -172,19 +172,14 @@ pub fn generate_words(lang: &Lang, amount: u16) -> Words {
 }
 
 /// Stylize a word by comparing it to the user-typed string.
-pub fn stylize_word(word: Word, user_type: String) -> String {
-    let word_chars: Vec<char> = word.chars().collect();
-    let user_type_chars: Vec<char> = user_type.chars().collect();
-
-    word_chars
-        .iter()
-        .enumerate()
-        .map(|(index, &ch)| {
-            let user_ch = user_type_chars.get(index);
-            match user_ch {
-                Some(&uc) if uc == ch => colorize(&ch.to_string(), Color::Green),
-                Some(_) => colorize(&ch.to_string(), Color::Red),
-                None => colorize(&ch.to_string(), Color::Gray),
+pub fn stylize_word(word: &str, user_type: &str) -> String {
+    word.chars()
+        .zip(user_type.chars())
+        .map(|(ch, user_ch)| {
+            if user_ch == ch {
+                colorize(ch, Color::Green)
+            } else {
+                colorize(ch, Color::Red)
             }
         })
         .collect::<String>()

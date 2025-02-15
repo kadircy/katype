@@ -8,7 +8,7 @@ pub fn generate_code_from_str(words: &str) -> String {
     URL_SAFE.encode(encoded_json)
 }
 
-pub fn generate_code(words: &Words) -> String {
+pub fn generate_code<'a>(words: &Words) -> String {
     let encoded_json = serde_json::to_string(words).expect("Invalid format of JSON in Words.");
     URL_SAFE.encode(encoded_json)
 }

@@ -11,7 +11,7 @@ pub fn clear_terminal() {
     print!("\x1B[2J\x1B[1;1H");
 }
 
-pub fn colorize(text: &str, color: Color) -> String {
+pub fn colorize<T: std::fmt::Display>(text: T, color: Color) -> String {
     match color {
         Color::Gray => format!("\x1b[38;5;245m{}\x1b[0m", text),
         Color::Red => format!("\x1b[31m{}\x1b[0m", text),

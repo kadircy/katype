@@ -24,7 +24,7 @@ struct ResultJson {
     name = "katype",
     about = "A fast typing test from terminal writted in Rust 🦀",
     author = "kadircy",
-    version = "0.2.1"
+    version = "v0.2.2"
 )]
 struct Cli {
     /// The number of words generated for the typing test. Max value is 65535.
@@ -164,7 +164,7 @@ fn main() {
     let word_statistic: String = words
         .iter()
         .zip(user_words.iter()) // Zip together words and user input for comparison
-        .map(|(word, user_word)| word::stylize_word(word, user_word.to_string()) + " ")
+        .map(|(word, user_word)| word::stylize_word(word, user_word) + " ")
         .collect();
 
     // Generate base64 code for the words
@@ -172,27 +172,21 @@ fn main() {
 
     // Print the results in a clean, formatted way
     println!("{}", word_statistic);
-    println!(
-        "wpm: {}",
-        utils::colorize(&wpm.to_string(), utils::Color::Green)
-    );
-    println!(
-        "acc: {}%",
-        utils::colorize(&acc.to_string(), utils::Color::Green)
-    );
+    println!("wpm: {}", utils::colorize(wpm, utils::Color::Green));
+    println!("acc: {}%", utils::colorize(acc, utils::Color::Green));
     println!(
         "total {} chars in {} words",
-        utils::colorize(&words.join("").len().to_string(), utils::Color::Green),
-        utils::colorize(&words.len().to_string(), utils::Color::Green)
+        utils::colorize(words.join("").len(), utils::Color::Green),
+        utils::colorize(words.len(), utils::Color::Green)
     );
     println!(
         "consistency: {}%",
-        utils::colorize(&consistency.to_string(), utils::Color::Green),
+        utils::colorize(consistency, utils::Color::Green),
     );
     println!(
         "time: {}s {}",
-        utils::colorize(&elapsed.as_secs().to_string(), utils::Color::Green),
-        utils::colorize(&lang.to_string(), utils::Color::Green),
+        utils::colorize(elapsed.as_secs(), utils::Color::Green),
+        utils::colorize(lang, utils::Color::Green),
     );
     println!(
         "code: {}",
