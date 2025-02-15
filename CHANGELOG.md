@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Implemented support for all types which supports `Display` to colorize with function.
+
+### Changed
+- Removed unnecessary `.to_string` calls from logging.
 
 ## [0.2.2] - 2025-02-15
 ### Added
