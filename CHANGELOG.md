@@ -6,6 +6,7 @@
 
 ### Changed
 - Removed unnecessary `.to_string` calls from logging.
+- Removed manually defined CLI variables.
 
 ## [0.2.2] - 2025-02-15
 ### Added
