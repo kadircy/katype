@@ -20,12 +20,7 @@ struct ResultJson {
 
 // Define the command-line arguments structure.
 #[derive(Debug, Parser)]
-#[clap(
-    name = "katype",
-    about = "A fast typing test from terminal writted in Rust 🦀",
-    author = "kadircy",
-    version = "v0.2.2"
-)]
+#[clap(name = "katype", about, author = "kadircy", version)]
 struct Cli {
     /// The number of words generated for the typing test. Max value is 65535.
     #[clap(long, short = 'a', default_value_t = 15)]
@@ -81,7 +76,7 @@ fn main() {
         );
         println!(
             "You can run test with this code via: {}",
-            utils::colorize(&format!("katype --code {}", &code), utils::Color::Green)
+            utils::colorize(format!("katype --code {}", &code), utils::Color::Green)
         );
         // Exit after code generated before terminal cleaned
         std::process::exit(0);
